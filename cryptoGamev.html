@@ -257,7 +257,7 @@
       </table>
     </div>
     <div id="controls">
-      <button id="menu-button">Menu</button> <button id="showGrapichs-button" onclick="graphics()">Show graphics</button> <button onclick="toggleGraphics()">Toggle Graphics</button> <button id="history-button" onclick="toggleHistory()">History</button> <button id="save-button">Save Game</button> <button id="logout-button">Logout</button>
+      <button id="menu-button">Menu</button> <button id="showGrapichs-button" onclick="graphics()">Show graphics</button> <button onclick="toggleGraphics()">Toggle Graphics</button> <button id="history-button" onclick="toggleHistory()">History</button> <button id="save-button">Save Game</button> <button id="logout-button" onclick="logout()">Logout</button>
     </div>
     <div id="graphics">
       <canvas id="crypto-chart" height="1600" style="box-sizing: border-box; height: 1200px; width: 100px;" width="2400"></canvas>
@@ -294,10 +294,10 @@
       <tbody id="history-table-body">
         <tr>
           <td id="cryptocurrency">Cryptocurrency</td>
-          <td id="transactionType">Buyed</td>
-          <td id="amount">1</td>
-          <td id="price">1000</td>
-          <td id="dateAndTime">2024-03-12 15:30:00</td>
+          <td id="transactionType"></td>
+          <td id="amount"></td>
+          <td id="price"></td>
+          <td id="dateAndTime"></td>
         </tr><!-- Add more rows for each transaction -->
       </tbody>
     </table>
@@ -360,6 +360,7 @@
     loadUserData();
     } else {
     alert('Nombre de usuario o contraseña incorrectos');
+    updateUI();
     }
     }
 
@@ -380,6 +381,7 @@
 
     localStorage.setItem(enteredUsername, enteredPassword);
     alert('Registrado exitosamente. Por favor, inicia sesión para comenzar el juego.');
+    updateUI();
     }
 
     function loadUserData() {
@@ -584,51 +586,70 @@
     }
 
     function buy(cryptoName) {
-    const crypto = cryptocurrencies.find(c => c.name === cryptoName);
-    if (crypto) {
+  const crypto = cryptocurrencies.find(c => c.name === cryptoName);
+  if (crypto) {
     // Open a dialog box to choose the buy option
     const buyOptions = prompt("Buy options: \n1. Buy all\n2. Buy percentage\n3. Buy quantity\n4. Buy 1 (default)");
     switch (buyOptions) {
       case "1":
-        const quantityToBuy = Math.floor(money / crypto.price);
-        crypto.quantity += quantityToBuy;
-        money -= quantityToBuy * crypto.price;
-        updateUI();
-        // Update the history with the buy transaction
-        updateHistory('Buy', cryptoName, quantityToBuy, crypto.price);
+        const quantityToBuyAll = Math.floor(money / crypto.price);
+        if (quantityToBuyAll > 0) {
+          crypto.quantity += quantityToBuyAll;
+          money -= quantityToBuyAll * crypto.price;
+          updateUI();
+          // Update the history with the buy transaction
+          updateHistory('Buy', cryptoName, quantityToBuyAll, crypto.price);
+        } else {
+          const cryptoAmountSuggestion = Math.floor(money / crypto.price);
+          alert("You don't have enough money to buy any " + cryptoName + " but can instead try to buy " + cryptoAmountSuggestion + " " + cryptoName);
+        }
         break;
       case "2":
         const percentageToBuy = parseFloat(prompt("Enter the percentage to buy (0-100): "));
         if (!isNaN(percentageToBuy) && percentageToBuy >= 0 && percentageToBuy <= 100) {
           const quantityToBuyPercentage = Math.floor((percentageToBuy / 100) * money / crypto.price);
-          crypto.quantity += quantityToBuyPercentage;
-          money -= quantityToBuyPercentage * crypto.price;
-          updateUI();
-          // Update the history with the buy transaction
-          updateHistory('Buy', cryptoName, quantityToBuyPercentage, crypto.price);
+          if (quantityToBuyPercentage > 0) {
+            crypto.quantity += quantityToBuyPercentage;
+            money -= quantityToBuyPercentage * crypto.price;
+            updateUI();
+            // Update the history with the buy transaction
+            updateHistory('Buy', cryptoName, quantityToBuyPercentage, crypto.price);
+          } else {
+            const cryptoAmountSuggestion = Math.floor(money / crypto.price);
+            alert("You don't have enough money to buy any " + cryptoName + " but can instead try to buy " + cryptoAmountSuggestion + " " + cryptoName);
+          }
         }
         break;
       case "3":
         const quantityToBuyInput = parseInt(prompt("Enter the quantity to buy: "));
-        if (!isNaN(quantityToBuyInput) && quantityToBuyInput > 0) {
+        if (!isNaN(quantityToBuyInput) && quantityToBuyInput > 0 && money >= quantityToBuyInput * crypto.price) {
           crypto.quantity += quantityToBuyInput;
           money -= quantityToBuyInput * crypto.price;
           updateUI();
           // Update the history with the buy transaction
           updateHistory('Buy', cryptoName, quantityToBuyInput, crypto.price);
+        } else {
+          const cryptoAmountSuggestion = Math.floor(money / crypto.price);
+          alert("Invalid quantity or not enough money to buy " + cryptoName + " but can instead try to buy " + cryptoAmountSuggestion + " " + cryptoName);
         }
         break;
       case "4":
       default:
-        crypto.quantity++;
-        money -= crypto.price;
-        updateUI();
-        // Update the history with the buy transaction
-        updateHistory('Buy', cryptoName, 1, crypto.price);
+        if (money >= crypto.price) {
+          crypto.quantity++;
+          money -= crypto.price;
+          updateUI();
+          // Update the history with the buy transaction
+          updateHistory('Buy', cryptoName, 1, crypto.price);
+        } else {
+          const cryptoAmountSuggestion = Math.floor(money / crypto.price);
+          alert("You don't have enough money to buy " + cryptoName + " but can instead try to buy " + cryptoAmountSuggestion + " " + cryptoName);
+        }
         break;
     }
-    }
-    }
+  }
+  }
+
 
     function sell(cryptoName) {
     const crypto = cryptocurrencies.find(c => c.name === cryptoName);
@@ -847,22 +868,26 @@
     }, 5000);
 
     // Añadir un event listener para el botón de logout
-    const logoutButton = document.getElementById('logout-button');
-    logoutButton.addEventListener('click', () => {
+    function logout() {
     // Reiniciar el estado del juego
     money = 1000;
     cryptocurrencies.forEach(crypto => {
-    crypto.quantity = 0;
+        crypto.quantity = 0;
     });
 
     // Actualizar la interfaz de usuario
     updateUI();
 
+    // Vaciar la tabla de historial
+    const historyTableBody = document.getElementById('history-table-body');
+    historyTableBody.innerHTML = '';
+
     // Alternar entre las pantallas de juego y login
     document.getElementById('game-container').style.display = 'none';
     document.getElementById('main-container').style.display = 'block';
     document.getElementById('login-container').style.display = 'none';
-    });
+  }
+
 
     // Obtener el año actual
     const currentYear = new Date().getFullYear();
