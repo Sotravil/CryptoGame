@@ -2,6 +2,8 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <title>Cryptocurrency Game</title>
   <style>
@@ -18,38 +20,30 @@
   padding: 10px 20px; /* Adjust the padding as needed */
   }
 
-
   #history-container h1 {
   text-align: center;
   }
-
   #sort-options {
   margin-bottom: 10px;
   }
-
   #sort-options select {
   padding: 5px;
   }
-
   #history-table {
   width: 100%;
   border-collapse: collapse;
   }
-
   #history-table th, #history-table td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
   }
-
   #history-table th {
   background-color: #f5f5f5;
   }
-
   #history-table tbody tr:nth-child(even) {
   background-color: #f9f9f9;
   }
-
   button {
   padding: 8px 18px;
   background-color: #007bff;
@@ -58,11 +52,9 @@
   border-radius: 3px;
   cursor: pointer;
   }
-
   button:hover {
   background-color: #0056b3;
   }
-
 
     
     
@@ -74,11 +66,9 @@
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-
     h1 {
       text-align: center;
     }
-
     button {
       padding: 8px 18px;
       background-color: #007bff;
@@ -88,18 +78,15 @@
       border-radius: 3px;
       cursor: pointer;
     }
-
     button:hover {
       background-color: #0056b3;
     }
-
     input[type="text"], input[type="password"] {
       width: 100%;
       padding: 8px;
       margin: 5px 0;
       box-sizing: border-box;
     }
-
     #game-container, #login-container, #history-container, #menu-container, #profile-container, #graphics {
       display: none;
     }
@@ -117,8 +104,7 @@
     <h1>Cryptocurrency Game</h1><button id="play-button" onclick="startGame()">Play</button><br>
     <button id="language" style="margin: 10px;display: center; font-size: 20px;">Language</button><br>
     <span id="version">Version: 0.6</span><br>
-    <span id="version">CVersion:<br>
-    0.0.4.024.03.14.9.13.1</span><br>
+    <span id="CVersion">CVersion:</span><br>
     <br>
     <span id="copyright">© MMS codes</span>
   </div>
@@ -257,7 +243,7 @@
       </table>
     </div>
     <div id="controls">
-      <button id="menu-button">Menu</button> <button id="showGrapichs-button" onclick="graphics()">Show graphics</button> <button onclick="toggleGraphics()">Toggle Graphics</button> <button id="history-button" onclick="toggleHistory()">History</button> <button id="save-button">Save Game</button> <button id="logout-button" onclick="logout()">Logout</button>
+      <button id="menu-button">Menu</button> <button id="showGrapichs-button" onclick="graphics()">Show graphics</button> <button onclick="toggleGraphics()">Toggle Graphics</button> <button id="history-button" onclick="toggleHistory()">History</button> <button id="save-button">Save Game</button> <button id="logout-button">Logout</button>
     </div>
     <div id="graphics">
       <canvas id="crypto-chart" height="1600" style="box-sizing: border-box; height: 1200px; width: 100px;" width="2400"></canvas>
@@ -324,7 +310,6 @@
     let showGraphicsFlag = true; // Bandera para mostrar u ocultar gráficos
     let username = '';
     let password = '';
-
     const cryptocurrencies = [
     { name: 'Mitzicoin', price: 10000, quantity: 0 },
     { name: 'Bitcoin', price: 1000, quantity: 0 },
@@ -340,19 +325,16 @@
     { name: 'Sotracoin', price: 5, quantity: 0 }
     // Agregar más criptomonedas
     ];
-
     // Función para iniciar el juego
     function startGame() {
     document.getElementById('main-container').style.display = 'none';
     document.getElementById('login-container').style.display = 'block';
     }
-
     // Función para iniciar sesión
     function login() {
     const enteredUsername = document.getElementById('username').value;
     const enteredPassword = document.getElementById('password').value;
     const savedPassword = localStorage.getItem(enteredUsername);
-
     if (enteredPassword === savedPassword) {
     username = enteredUsername; // Establecer el nombre de usuario
     document.getElementById('login-container').style.display = 'none';
@@ -363,27 +345,22 @@
     updateUI();
     }
     }
-
     // Función para registrarse
     function signup() {
     const enteredUsername = document.getElementById('username').value;
     const enteredPassword = document.getElementById('password').value;
-
     if (!enteredUsername || !enteredPassword) {
     alert('Por favor, ingresa tanto el nombre de usuario como la contraseña.');
     return;
     }
-
     if (localStorage.getItem(enteredUsername)) {
     alert('El nombre de usuario ya existe. Por favor, elige un nombre de usuario diferente.');
     return;
     }
-
     localStorage.setItem(enteredUsername, enteredPassword);
     alert('Registrado exitosamente. Por favor, inicia sesión para comenzar el juego.');
     updateUI();
     }
-
     function loadUserData() {
     const userDataString = localStorage.getItem('CryptoGame');
     if (userDataString) {
@@ -417,7 +394,6 @@
           historyTableBody.appendChild(row);
         });
       }
-
       // Update profile picture
       if (userData[username].profilePicUrl) {
         profilePic.src = userData[username].profilePicUrl;
@@ -432,22 +408,17 @@
   function closeProfile() {
   const profileContainer = document.getElementById('profile-container');
   const gameContainer = document.getElementById('game-container');
-
   // Hide the profile container
   profileContainer.style.display = 'none';
-
   //Hide the menu container
   menuContainer.style.display = 'none';
-
   // Show the game container
   gameContainer.style.display = 'block';
   }
-
   // Get the profile button and container elements
   const profileButton = document.getElementById('profile-button');
   const menuContainer = document.getElementById('menu-container');
   const profileContainer = document.getElementById('profile-container');
-
   // Add an event listener to the profile button to toggle the display of the profile container
   profileButton.addEventListener('click', function() {
   if (profileContainer.style.display === 'none' || profileContainer.style.display === '') {
@@ -459,13 +430,10 @@
   }
   });
 
-
-
   // Get elements
   let profilePic = document.getElementById("profile-pic");
   let profilePic1 = document.getElementById("profile-pic1");
   let inputFile = document.getElementById("input-file");
-
   // Add event listener to input file change
   inputFile.addEventListener("change", function() {
   // Set the source of the profile picture to the selected file
@@ -474,13 +442,9 @@
   });
 
 
-
-
-
     function graphics() {
     const graphicsContainer = document.getElementById('graphics');
     const gameContainer = document.getElementById('game-container');
-
     if (graphicsContainer.style.display === 'block') {
     gameContainer.style.display = 'block';
     graphicsContainer.style.display = 'none';
@@ -489,88 +453,17 @@
     graphicsContainer.style.display = 'block';
     }
     }
-    // Definimos un objeto para almacenar los precios anteriores de cada criptomoneda
-    const previousPrices = {};
-
-    // Inicializamos los precios anteriores con los valores actuales
-    cryptocurrencies.forEach(crypto => {
-    previousPrices[crypto.name] = crypto.price;
-    });
     
     // Get the button element
   const languageButton = document.getElementById('language');
-
   // Add event listener to the button
   languageButton.addEventListener('click', function() {
   alert('Coming soon');
   });
 
-
-    const chartConfig = {
-    type: 'bar',
-    data: {
-    labels: cryptocurrencies.map(crypto => crypto.name),
-    datasets: [{
-      label: 'Precio',
-      data: cryptocurrencies.map(crypto => crypto.price),
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      borderColor: 'rgba(75, 192, 192, 1)',
-      borderWidth: 1
-    }]
-    },
-
-    options: {
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    },
-    animation: {
-      tension: {
-        duration: 1000,
-        easing: 'linear',
-        from: 1,
-        to: 0,
-        loop: true
-      }
-    }
-    }
-    };
-
-    const cryptoChart = new Chart('crypto-chart', chartConfig);
-
-    function updateChart() {
-    chartConfig.data.datasets[0].data = cryptocurrencies.map(crypto => crypto.price);
-
-    // Actualizamos los colores de las barras comparando con los precios anteriores
-    chartConfig.data.datasets[0].backgroundColor = cryptocurrencies.map(crypto => {
-    const previousPrice = previousPrices[crypto.name];
-    const currentPrice = crypto.price;
-    // Si el precio actual es mayor que el precio anterior, devuelve verde, de lo contrario, devuelve rojo
-    return currentPrice > previousPrice ? 'rgba(0, 255, 0, 0.2)' : 'rgba(255, 0, 0, 0.2)';
-    });
-    chartConfig.data.datasets[0].borderColor = cryptocurrencies.map(crypto => {
-    const previousPrice = previousPrices[crypto.name];
-    const currentPrice = crypto.price;
-    // Si el precio actual es mayor que el precio anterior, devuelve verde, de lo contrario, devuelve rojo
-    return currentPrice > previousPrice ? 'rgba(0, 255, 0, 1)' : 'rgba(255, 0, 0, 1)';
-    });
-
-    // Actualizamos los precios anteriores con los nuevos precios actuales
-    cryptocurrencies.forEach(crypto => {
-    previousPrices[crypto.name] = crypto.price;
-    });
-
-    cryptoChart.update();
-    }
-
-    // Actualizamos el gráfico cada 5 segundos
-    setInterval(updateChart, 5000);
-
     function updateHistory(transactionType, cryptoName, amount, price) {
     const tbody = document.getElementById('history-table-body');
     const date = new Date().toLocaleString();
-
     // Create a new row for the transaction
     const row = document.createElement('tr');
     row.innerHTML = `
@@ -580,11 +473,9 @@
     <td>$${price}<\/td>
     <td>${date}<\/td>
     `;
-
     // Insert the new row at the top of the table
     tbody.insertBefore(row, tbody.firstChild);
     }
-
     function buy(cryptoName) {
   const crypto = cryptocurrencies.find(c => c.name === cryptoName);
   if (crypto) {
@@ -650,7 +541,6 @@
   }
   }
 
-
     function sell(cryptoName) {
     const crypto = cryptocurrencies.find(c => c.name === cryptoName);
     if (crypto && crypto.quantity > 0) {
@@ -697,8 +587,6 @@
     }
     }
 
-
-
     // Función para actualizar la interfaz de usuario
     function updateUI() {
   // Update username element in game container
@@ -706,24 +594,20 @@
   if (usernameElement) {
     usernameElement.textContent = `Username: ${username}`;
   }
-
   // Update profile username elements
   const profileUsernameElement1 = document.getElementById('profile-username');
   if (profileUsernameElement1) {
     profileUsernameElement1.textContent = username;
   }
-
   const profileUsernameElement2 = document.getElementById('profile-username2');
   if (profileUsernameElement2) {
     profileUsernameElement2.textContent = username;
   }
-
   // Update money element
   const moneyElement = document.getElementById('money');
   if (moneyElement) {
     moneyElement.textContent = `Money: $${money}`;
   }
-
   // Update cryptocurrency quantities
   cryptocurrencies.forEach(crypto => {
     const quantityElement = document.getElementById(`${crypto.name.toLowerCase()}-quantity`);
@@ -733,16 +617,11 @@
   });
   }
 
-
-
-
-
     // Función para alternar la visibilidad del historial de transacciones
     // Función para alternar la visibilidad del historial de transacciones
     function toggleHistory() {
     const historyContainer = document.getElementById('history-container');
     const gameContainer = document.getElementById('game-container');
-
     if (historyContainer.style.display === 'block') {
     gameContainer.style.display = 'block';
     historyContainer.style.display = 'none';
@@ -752,13 +631,11 @@
     }
     }
 
-
     // Función para salir del historial de transacciones
     function exitHistory() {
     document.getElementById('game-container').style.display = 'block';
     document.getElementById('history-container').style.display = 'none';
     }
-
     // Función para alternar la criptomoneda favorita
     function toggleFavorite(cryptoName) {
     const crypto = cryptocurrencies.find(c => c.name === cryptoName);
@@ -774,7 +651,6 @@
     updateTableRows();
     }
     }
-
     // Función para alternar los gráficos
     function toggleGraphics() {
     showGraphicsFlag = !showGraphicsFlag;
@@ -784,24 +660,22 @@
     hideGraphics();
     }
     }
-
     // Función para actualizar los precios de las criptomonedas
     function updatePrices() {
     cryptocurrencies.forEach(crypto => {
     const maxChange = Math.max(1, Math.floor(crypto.price * 0.1)); // Maximum change is 10% of current price
     let change = Math.floor(Math.random() * maxChange) + 1; // Random change between 1 and maxChange
     const continueChain = Math.random() > 0.3; // 30% chance to continue the chain
-    if (continueChain && crypto.chainLength < 3) {
+    if (continueChain && crypto.chainLength < 10) {
       crypto.chainLength++;
       change *= 2; // Double the change for a chain
     } else {
       crypto.chainLength = 1; // Start a new chain
     }
     crypto.price += Math.random() > 0.5 ? change : -change; // Randomly increase or decrease the price
-    crypto.price = Math.max(1, Math.min(1000000, crypto.price)); // Ensure price stays between 1 and 1,000,000
+    crypto.price = Math.max(1, Math.min(100000000000, crypto.price)); // Ensure price stays between 1 and 100,000,000,000
     });
     }
-
     // Función para ordenar las criptomonedas
     function sortCryptos(sortType) {
     switch (sortType) {
@@ -817,7 +691,6 @@
     updateUI();
     updateTableRows(); // Add this line to update the table rows
     }
-
     // Función para actualizar las filas de la tabla de criptomonedas
     function updateTableRows() {
     const tbody = document.getElementById('crypto-table-body');
@@ -835,7 +708,6 @@
     tbody.appendChild(row);
     });
     }
-
     // Función para mostrar los gráficos
     function showGraphics() {
     cryptocurrencies.forEach(crypto => {
@@ -845,12 +717,10 @@
     crypto.prevPrice = crypto.price;
     });
     }
-
     // Inicializar el precio previo de las criptomonedas
     cryptocurrencies.forEach(crypto => {
     crypto.prevPrice = crypto.price;
     });
-
     // Función para ocultar los gráficos
     function hideGraphics() {
     cryptocurrencies.forEach(crypto => {
@@ -858,7 +728,6 @@
     document.getElementById(`${crypto.name.toLowerCase()}-quantity`).innerText = crypto.quantity;
     });
     }
-
     // Función para actualizar los precios y los gráficos cada 5 segundos
     setInterval(() => {
     updatePrices();
@@ -866,43 +735,32 @@
     showGraphics();
     }
     }, 5000);
-
     // Añadir un event listener para el botón de logout
-    function logout() {
+    const logoutButton = document.getElementById('logout-button');
+    logoutButton.addEventListener('click', () => {
     // Reiniciar el estado del juego
     money = 1000;
     cryptocurrencies.forEach(crypto => {
-        crypto.quantity = 0;
+    crypto.quantity = 0;
     });
-
     // Actualizar la interfaz de usuario
     updateUI();
-
-    // Vaciar la tabla de historial
-    const historyTableBody = document.getElementById('history-table-body');
-    historyTableBody.innerHTML = '';
-
     // Alternar entre las pantallas de juego y login
     document.getElementById('game-container').style.display = 'none';
     document.getElementById('main-container').style.display = 'block';
     document.getElementById('login-container').style.display = 'none';
-  }
-
-
+    });
     // Obtener el año actual
     const currentYear = new Date().getFullYear();
-
     // Actualizar el texto de derechos de autor
     const copyrightElement = document.getElementById('copyright');
     copyrightElement.textContent += ` ${currentYear}`;
-
     // Event listener for the menu button
     const menuButton = document.getElementById('menu-button');
     menuButton.addEventListener("click", () => {
     const gameContainer = document.getElementById('game-container');
     const historyContainer = document.getElementById('history-container');
     const menuContainer = document.getElementById('menu-container');
-
     if (historyContainer.style.display === 'block') {
     gameContainer.style.display = 'none';
     historyContainer.style.display = 'none';
@@ -912,7 +770,6 @@
     menuContainer.style.display = 'flex';
     }
     });
-
 
     // Event listener for the save button
     const saveButton = document.getElementById("save-button");
@@ -934,22 +791,17 @@
     })),
     profilePicUrl: profilePic.src // Add the profile picture URL to game data
     };
-
     // Create a folder named "CryptoGame" if it doesn't exist
     if (!localStorage.getItem("CryptoGame")) {
     localStorage.setItem("CryptoGame", JSON.stringify({}));
     }
-
     // Get the game data folder
     const cryptoGame = JSON.parse(localStorage.getItem("CryptoGame"));
-
     // Save the user's game data as a separate JSON file
     cryptoGame[username] = gameData;
     localStorage.setItem("CryptoGame", JSON.stringify(cryptoGame));
-
     alert("Juego Guardado exitosamente!");
     });
-
     // Event listeners for the username and password fields to login on Enter key
     document.getElementById('username').addEventListener('keyup', function(event) {
     if (event.keyCode === 13) {
@@ -957,13 +809,116 @@
     document.getElementById('login-button').click();
     }
     });
-
     document.getElementById('password').addEventListener('keyup', function(event) {
     if (event.keyCode === 13) {
     event.preventDefault();
     document.getElementById('login-button').click();
     }
     });
+    // Get the current URL
+        let url = window.location.href;
+
+        // Split the URL by "/" to get the file name
+        let parts = url.split("/");
+        let fileName = parts[parts.length - 1];
+
+        // Remove the ".html" extension from the file name
+        fileName = fileName.replace(".html", "");
+
+        // Set the file name as the title
+        document.title = fileName;
+
+        // Split the file name by "v" to get the version parts
+        let versionParts = fileName.split("v");
+        let majorVersion = versionParts[1].split(".")[0];
+        let minorVersion = versionParts[1].split(".")[1];
+
+        // Set the version as the content of the version span
+        document.getElementById("version").textContent = `Version: ${majorVersion}.${minorVersion}`;
+
+        // Obtener la fecha y hora actual
+        let now = new Date();
+
+        // Obtener la versión del juego (0.0.7 en este caso)
+        let gameVersion = "0.0.7";
+
+        // Obtener la versión de la CVersion (0.0.4 en este caso)
+        let demoVersion = "0.0.4";
+
+        // Obtener la fecha y hora actual en el formato deseado
+        let formattedDate = `${now.getFullYear()}.${(now.getMonth() + 1).toString().padStart(2, "0")}.${now.getDate().toString().padStart(2, "0")}.${now.getHours().toString().padStart(2, "0")}.${now.getMinutes().toString().padStart(2, "0")}.${now.getHours() >= 6 && now.getHours() < 18 ? "1" : "0"}`;
+
+        // Construir la cadena final y establecerla en el span
+        document.getElementById("CVersion").textContent = `${demoVersion}.${formattedDate}`;
+
+    // Definimos un objeto para almacenar los precios anteriores de cada criptomoneda
+  const previousPrices = {};
+
+  // Inicializamos los precios anteriores con los valores actuales
+  cryptocurrencies.forEach(crypto => {
+  previousPrices[crypto.name] = crypto.price;
+  });
+
+  const chartConfig = {
+  type: 'bar',
+  data: {
+    labels: cryptocurrencies.map(crypto => crypto.name),
+    datasets: [{
+      label: 'Precio',
+      data: cryptocurrencies.map(crypto => crypto.price),
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 1
+    }]
+  },
+
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    },
+    animation: {
+      tension: {
+        duration: 1000,
+        easing: 'linear',
+        from: 1,
+        to: 0,
+        loop: true
+      }
+    }
+  }
+  };
+
+  const cryptoChart = new Chart('crypto-chart', chartConfig);
+
+  function updateChart() {
+  chartConfig.data.datasets[0].data = cryptocurrencies.map(crypto => crypto.price);
+
+  // Actualizamos los colores de las barras comparando con los precios anteriores
+  chartConfig.data.datasets[0].backgroundColor = cryptocurrencies.map(crypto => {
+    const previousPrice = previousPrices[crypto.name];
+    const currentPrice = crypto.price;
+    // Si el precio actual es mayor que el precio anterior, devuelve verde, de lo contrario, devuelve rojo
+    return currentPrice > previousPrice ? 'rgba(0, 255, 0, 0.2)' : 'rgba(255, 0, 0, 0.2)';
+  });
+  chartConfig.data.datasets[0].borderColor = cryptocurrencies.map(crypto => {
+    const previousPrice = previousPrices[crypto.name];
+    const currentPrice = crypto.price;
+    // Si el precio actual es mayor que el precio anterior, devuelve verde, de lo contrario, devuelve rojo
+    return currentPrice > previousPrice ? 'rgba(0, 255, 0, 1)' : 'rgba(255, 0, 0, 1)';
+  });
+
+  // Actualizamos los precios anteriores con los nuevos precios actuales
+  cryptocurrencies.forEach(crypto => {
+    previousPrices[crypto.name] = crypto.price;
+  });
+
+  cryptoChart.update();
+  }
+
+  // Actualizamos el gráfico cada 5 segundos
+  setInterval(updateChart, 5000);
   </script>
 </body>
 </html>
